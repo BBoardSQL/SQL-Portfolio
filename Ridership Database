@@ -82,4 +82,3 @@ FROM Ridership_Total
 JOIN Eats_Total
 ON Ridership_Total.CustomerID = Eats_Total.CustomerID
 ;
-
