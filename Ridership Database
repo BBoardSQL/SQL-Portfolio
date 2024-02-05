@@ -1,0 +1,85 @@
+#This project utilizes the following Ridership database:
+
+CREATE TABLE Ridership_Total
+    (`City` varchar(20),  `Ridership_Amount` numeric);
+
+INSERT INTO Ridership_Total (`City`, `Ridership_Amount`)
+VALUES ('Auburn', 10320),
+('Birmingham', 20108),
+('Dothan', 1870),
+('Huntsville', 10853), 
+('Mobile', 19040),
+('Montgomery', 10295),
+('Tuscaloosa', 9999);
+
+#For this project, I used SQL to query the Ridership_Total database to get information about riders in different cities.
+
+#1. What are number of cities in the database?
+SELECT COUNT(DISTINCT City)
+FROM Ridership_Total
+;
+
+#2. What is the city with the most ridership totals?
+SELECT City, MAX(Ridership_Amount) 
+FROM Ridership_Total 
+GROUP BY City 
+ORDER BY MAX(Ridership_Amount) DESC LIMIT 1
+;
+
+#3. What is the city with the least ridership totals?
+SELECT City, MIN(Ridership_Amount) 
+FROM Ridership_Total 
+GROUP BY City 
+ORDER BY MIN(Ridership_Amount) ASC LIMIT 1
+;
+
+#4. What is the average ridership across all cities?
+SELECT AVG(Ridership_Amount)
+FROM Ridership_Total
+;
+
+#5. What is the total of all riders across all cities?
+SELECT SUM(Ridership_Amount)
+FROM Ridership_Total
+;
+
+#Next, I utilized the Ridership_Total database to make a case statement to label cities by ridership utilizing the conditions detailed below:
+
+If a city has under 5000 riders, the “heat label” for that city should be: “Cold”
+If a city has between 5000 and 10000 riders, the “heat label” for that city should be: “Warm”
+If a city has between 10000 and 20000 riders, the “heat label” for that city should be: “Hot”
+If a city has over 20000 riders, the “heat label” for that city should be: “Fire”.
+
+#6. Case Statement
+SELECT *,
+CASE
+WHEN Ridership_Amount <5000 THEN 'COLD'
+WHEN Ridership_Amount BETWEEN 5000 AND 10000 THEN 'WARM'
+WHEN Ridership_Amount BETWEEN 10000 AND 20000 THEN 'HOT'
+ELSE 'FIRE'
+END AS Heat_Label
+FROM Ridership_Total
+;
+
+Lastly, I utilized the data from two databases. Here is the additional database labeled Eats:
+
+CREATE TABLE Eats_Total
+     (`CustomerID` numeric, `Repeat_customer` varchar(1));
+ INSERT INTO Eats_Total (`CustomerID`, `Repeat_customer`)
+   VALUES (1,'Y'),
+          (2,'N'),
+          (3,'Y'),
+          (4,'Y'),
+          (5,'N'),
+          (6,'N'),
+          (7,'Y');
+
+I joined two databases, labeled Ridership_Total and Eats_Total, to answer the following request:
+
+#7. Make a list of riders who are also repeat UEats customers.
+SELECT CustomerName, Repeat_customer
+FROM Ridership_Total
+JOIN Eats_Total
+ON Ridership_Total.CustomerID = Eats_Total.CustomerID
+;
+
