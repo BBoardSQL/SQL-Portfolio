@@ -1,0 +1,13 @@
+#This project utilizes the following UBER Ridership database:
+
+CREATE TABLE Ridership_Total
+    (`City` varchar(20),  `Ridership_Amount` numeric);
+
+INSERT INTO Ridership_Total (`City`, `Ridership_Amount`)
+VALUES ('Auburn', 10320),
+('Birmingham', 20108),
+('Dothan', 1870),
+('Huntsville', 10853), 
+('Mobile', 19040),
+('Montgomery', 10295),
+('Tuscaloosa', 9999);
